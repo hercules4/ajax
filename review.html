@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+<title></title>
+</head>
+<style type="text/css">
+* {
+    font: 14px arial;
+}
+label {
+    display: block;
+}
+input[type="text"], textarea {
+    border: 1px solid #aaa;
+    padding: 4px;
+    border-radius: 4px;
+    width: 200px;
+}
+textarea {
+    height: 50px;
+}
+</style>
+<body>
+    
+<p>Hide all sub-menus and then show/hide on click using jQuery.</p>
+    
+<ul>
+    <li><a href="#">Sports</a>
+        <ul>
+            <li><a href="#">Rock Climbing</a></li>
+            <li><a href="#">Skiing</a></li>
+            <li><a href="#">Mountain Biking</a></li>
+        </ul>
+    </li>
+    <li><a href="#">Foods</a>
+        <ul>
+            <li><a href="#">Seafood</a></li>
+            <li><a href="#">Fruits</a></li>
+            <li><a href="#">Pasta</a></li>
+        </ul>
+    </li>
+    <li><a href="#">Weather</a></li>
+</ul>
+
+<br>
+
+<p>If the form is submitted without a name or email, those fields should be highlighted with a red border and the form should not to Google.</p>
+
+<form action="http://google.com" method="post">
+    <p><label>* Name: </label>
+    <input type="text" name="username"></p>
+    
+    <p><label>* Email: </label>
+    <input type="text" name="email"></p>
+    
+    <p><label>Comments: </label>
+    <textarea name="comments"></textarea></p>
+    
+    <p><input type="submit" name="submit"></p>
+</form>
+
+</body>
+</html>
