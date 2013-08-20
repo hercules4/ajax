@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<style type="text/css">
+
+#container { width: 400px; margin: 20px auto; font: 14px arial; }
+
+form { margin: 20px 0 0; }
+form label { color: #333; display: block; margin: 0 0 2px; }
+form input[type="text"] { width: 388px; border: 1px solid #bbb; background: #f6f6f6; padding: 5px; }
+form textarea { width: 388px; height: 150px; border: 1px solid #bbb; background: #eee; padding: 5px; }
+
+</style>
+<script type="text/javascript">
+
+function Ajax() {
+  	var transport;
+  	if (window.XMLHttpRequest) {
+    	transport = new XMLHttpRequest();
+  	} else {
+    	try { transport = new ActiveXObject("MSXML2.XMLHTTP.6.0"); } catch(e){}
+    	try { transport = new ActiveXObject("MSXML2.XMLHTTP"); } catch(e){}
+  	}
+  	if (!transport) return;
+  	this.transport = transport;
+}
+
+Ajax.prototype.send = function(url, options) {
+  	if (!this.transport) return;
+  	var transport = this.transport;
+  	var aborted = false;
+  	var _options = {
+      	method: "GET",
+		data: null,
+      	timeout: 5,
+      	onerror: function(){},
+      	onsuccess: function(){}
+     };
+
+   	for (var key in options) {
+     	_options[key] = options[key];
+   	}
+
+   	function checkForTimeout() {
+      	if (transport.readyState != 4) {
+        	aborted = true;
+        	transport.abort();
+      	}
+   	}
+   	setTimeout(checkForTimeout, _options.timeout * 1000);
+
+   	function onreadystateCallback() {
+    	if (transport.readyState == 4) {
+      		if (!aborted && (transport.status == 200 || transport.status == 304)) {
+        		_options.onsuccess(transport);
+      		} else {
+        		_options.onerror(transport);
+      		}
+    	}
+   	}
+
+   	transport.open(_options.method, url, true);
+	if (_options.method == "POST") {
+		transport.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	}
+   	transport.onreadystatechange = onreadystateCallback;
+   	transport.send(_options.data);
+}
+
+function processRequest(transport) {
+	document.getElementById('replace').innerHTML = transport.responseText;
+}
+
+function init() {
+	var formData = "";
+	
+	document.getElementById('myForm').onsubmit = function() {
+		for (var i=0; i<this.elements.length; i++) {
+			formData += this.elements[i].name;
+			formData += "=";
+			formData += escape(this.elements[i].value);
+			formData += "&";
+		}
+		
+		var ajax = new Ajax();
+		ajax.send('process.php', {
+			method: "POST",
+			data: formData,
+			onerror: function(transport) {
+				alert('error');
+			},
+			onsuccess: processRequest
+		});
+		
+		return false;
+	}
+}
+
+window.onload = init;
+
+</script>	
+</head>
+<body>
+	
+<div id="container">
+	<div id="replace">
+		<form id="myForm" method="post" action="process.php">
+			<p><label>Name:</label>
+			<input type="text" name="name"></p>
+	
+			<p><label>Email:</label>
+			<input type="text" name="email"></p>
+	
+			<p><label>Comments:</label>
+			<textarea name="comments"></textarea></p>
+	
+			<p><input type="submit" name="submit" value="Submit"></p>
+		</form>
+	</div>
+</div>
+
+</body>
+</html>
