@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script type="text/javascript">
+
+function build_table(response) {
+    for (var category in response) {
+        for (var i = 0; i < response[category].length; i++) {
+            var row = $('<tr><td>'+category+'</td><td>'+response[category][i]+'</td></tr>');
+            $('tbody').append(row);
+        }
+    }
+}
+
+$(function() {
+    $.getJSON('shopping_list.php').done(build_table);
+});
+
+</script>
+</head>
+<body>
+    
+<table>
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>Item</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+</body>
+</html>
