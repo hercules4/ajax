@@ -69,13 +69,13 @@ Ajax.prototype.send = function(url, options) {
 }
 
 function processRequest(transport) {
-    document.getElementById('replace').innerHTML = transport.responseText;
+    document.getElementById('container').innerHTML = transport.responseText;
 }
 
 function init() {
     var formData = "";
     
-    document.getElementById('myForm').onsubmit = function() {
+    document.getElementById('my_form').onsubmit = function() {
         for (var i=0; i<this.elements.length; i++) {
             formData += this.elements[i].name;
             formData += "=";
@@ -104,20 +104,18 @@ window.onload = init;
 <body>
     
 <div id="container">
-    <div id="replace">
-        <form id="myForm" method="post" action="process.php">
-            <p><label>Name:</label>
-            <input type="text" name="name"></p>
-    
-            <p><label>Email:</label>
-            <input type="text" name="email"></p>
-    
-            <p><label>Comments:</label>
-            <textarea name="comments"></textarea></p>
-    
-            <p><input type="submit" name="submit" value="Submit"></p>
-        </form>
-    </div>
+    <form id="my_form" method="post" action="process.php">
+        <p><label>Name:</label>
+        <input type="text" name="name"></p>
+
+        <p><label>Email:</label>
+        <input type="text" name="email"></p>
+
+        <p><label>Comments:</label>
+        <textarea name="comments"></textarea></p>
+
+        <p><input type="submit" name="submit" value="Submit"></p>
+    </form>
 </div>
 
 </body>

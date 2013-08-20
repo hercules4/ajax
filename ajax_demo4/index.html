@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<style type="text/css">
+
+#container { width: 400px; margin: 20px auto; font: 14px arial; }
+
+form { margin: 20px 0 0; }
+form label { color: #333; display: block; margin: 0 0 2px; }
+form input[type="text"] { width: 388px; border: 1px solid #bbb; background: #f6f6f6; padding: 5px; }
+form textarea { width: 388px; height: 150px; border: 1px solid #bbb; background: #eee; padding: 5px; }
+
+</style>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script type="text/javascript">
+
+$(function() {
+   $('#my_form').on('submit', function(e) {
+       e.preventDefault();
+       
+       $.post('process.php', $(this).serialize(), function(response) {
+           $('#container').html(response);
+       });
+       
+       /*$.ajax({
+           type: 'POST',
+           url: 'process.php',
+           data: $(this).serialize(),
+           success: function(response) {
+               $('#container').html(response);
+           },
+           error: function(response) {
+               console.log(response);
+           }
+       });*/
+       
+       /*$.post('process.php', $(this).serialize()).done(function(response) {
+           $('#container').html(response);
+       }).fail(function(response) {
+           console.log(response);
+       });*/
+   });
+});
+
+</script>   
+</head>
+<body>
+    
+<div id="container">
+    <form id="my_form" method="post" action="process.php">
+        <p><label>Name:</label>
+        <input type="text" name="name"></p>
+
+        <p><label>Email:</label>
+        <input type="text" name="email"></p>
+
+        <p><label>Comments:</label>
+        <textarea name="comments"></textarea></p>
+
+        <p><input type="submit" name="submit" value="Submit"></p>
+    </form>
+</div>
+
+</body>
+</html>

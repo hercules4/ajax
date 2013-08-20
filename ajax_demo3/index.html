@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script type="text/javascript">
+
+$(function() {
+    $('a').on('click', function(e) {
+        e.preventDefault();
+        
+        $('#container').load('content.html');
+        
+        /*$.get('content.html', function(response) {
+            $('#container').html(response);
+        });*/
+       
+        /*$.ajax({
+            type: 'GET',
+            url: 'content.html',
+            success: function(response) {
+                $('#container').html(response);
+            },
+            error: function(response) {
+                console.log(response);
+            }
+        });*/
+       
+        /*$.get('content.html').done(function(response) {
+            $('#container').html(response);
+        }).fail(function(response) {
+            console.log(response);
+        });*/
+    });
+});
+
+</script>   
+</head>
+<body>
+
+<div id="container"></div>
+
+<p><a href="content.html">Click to load content</a></p>
+
+</body>
+</html>
