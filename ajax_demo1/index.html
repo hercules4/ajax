@@ -5,55 +5,55 @@
 <script type="text/javascript">
 
 function Ajax() {
-  	var transport;
-  	if (window.XMLHttpRequest) {
-    	transport = new XMLHttpRequest();
-  	} else {
-    	try { transport = new ActiveXObject("MSXML2.XMLHTTP.6.0"); } catch(e){}
-    	try { transport = new ActiveXObject("MSXML2.XMLHTTP"); } catch(e){}
-  	}
-  	if (!transport) return;
-  	this.transport = transport;
+    var transport;
+    if (window.XMLHttpRequest) {
+        transport = new XMLHttpRequest();
+    } else {
+        try { transport = new ActiveXObject("MSXML2.XMLHTTP.6.0"); } catch(e){}
+        try { transport = new ActiveXObject("MSXML2.XMLHTTP"); } catch(e){}
+    }
+    if (!transport) return;
+    this.transport = transport;
 }
 
 Ajax.prototype.send = function(url, options) {
-	if (!this.transport) return;
-  	var transport = this.transport;
-  	var _options = {
-      	method: "GET",
-      	callback: function(){}
+    if (!this.transport) return;
+    var transport = this.transport;
+    var _options = {
+        method: "GET",
+        callback: function(){}
     };
 
-   	for (var key in options) {
-     	_options[key] = options[key];
-   	}
+    for (var key in options) {
+        _options[key] = options[key];
+    }
 
-   	transport.open(_options.method, url, true);
-	transport.onreadystatechange = function() { 
-		_options.callback(transport) 
-	};
-   	transport.send(null);
+    transport.open(_options.method, url, true);
+    transport.onreadystatechange = function() { 
+        _options.callback(transport) 
+    };
+    transport.send(null);
 }
 
 function processRequest(transport) {
-	if (transport.readyState == 4) {
-		document.getElementById('container').innerHTML = transport.responseText;
-	}
+    if (transport.readyState == 4) {
+        document.getElementById('container').innerHTML = transport.responseText;
+    }
 }
 
 function replaceContent() {
-	document.getElementsByTagName('a')[0].onclick = function() {
-		var ajax = new Ajax();
-		ajax.send('content.html', {
-			callback: processRequest
-	 	});
-		return false;
-	}
+    document.getElementsByTagName('a')[0].onclick = function() {
+        var ajax = new Ajax();
+        ajax.send('content.html', {
+            callback: processRequest
+        });
+        return false;
+    }
 }
 
 window.onload = replaceContent;
 
-</script>	
+</script>   
 </head>
 <body>
 
