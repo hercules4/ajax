@@ -6,14 +6,18 @@
 <script type="text/javascript">
 
 function build_table(response) {
-    console.log(response);
+    var sum = 0;
     
     for (var category in response) {
         for (var i = 0; i < response[category].length; i++) {
-            var row = $('<tr><td>'+category+'</td><td>'+response[category][i].name+'</td><td>'+response[category][i].price+'</td></tr>');
+            var row = $('<tr><td>'+category+'</td><td>'+response[category][i].name+'</td><td>$'+response[category][i].price+'</td></tr>');
             $('tbody').append(row);
+            
+            sum += parseFloat(response[category][i].price);
         }
     }
+    
+    $('tbody').append('<tr><td></td><td>Total:</td><td>$'+sum.toFixed(2)+'</td></tr>');
 }
 
 $(function() {
@@ -33,6 +37,7 @@ $(function() {
         </tr>
     </thead>
     <tbody></tbody>
+    <tfoot></tfoot>
 </table>
 
 </body>

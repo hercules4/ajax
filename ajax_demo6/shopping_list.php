@@ -7,10 +7,10 @@ echo <<<EOL
         "Produce": [
             {"name": "Broccoli", "price": 4},
             {"name": "Carrots", "price": 5},
-            {"name": "Mushrooms", "price": 6}
+            {"name": "Mushrooms", "price": 6.99}
         ],
         "Seafood": [
-            {"name": "Salmon", "price": 7},
+            {"name": "Salmon", "price": 7.5},
             {"name": "Scallops", "price": 8}
         ]
     }
