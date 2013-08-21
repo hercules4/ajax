@@ -17,7 +17,7 @@ function build_table(response) {
         }
     }
     
-    $('tbody').append('<tr><td></td><td>Total:</td><td>$'+sum.toFixed(2)+'</td></tr>');
+    $('tfoot').html('<tr><td></td><td>Total:</td><td>$'+sum.toFixed(2)+'</td></tr>');
 }
 
 $(function() {
