@@ -16,9 +16,13 @@ function category_list(response) {
 function product_table(response) {
     var sum = 0;
     
+    $('tbody').empty();
+    
     for (var category in response) {
         for (var i = 0; i < response[category].length; i++) {
-            var row = $('<tr><td>'+category+'</td><td>'+response[category][i].name+'</td><td>$'+response[category][i].price+'</td></tr>');
+            var row = $('<tr><td>'+category+'</td>\
+            <td>'+response[category][i].name+'</td>\
+            <td>$'+response[category][i].price+'</td></tr>');
             
             $('tbody').append(row);
             
@@ -30,8 +34,17 @@ function product_table(response) {
 }
 
 $(function() {
-    $.getJSON('shopping_list.php?action=categories').done(category_list);
-    $.getJSON('shopping_list.php?action=all').done(product_table);
+    $.getJSON('shopping_list.php?action=get_categories').done(category_list);
+    
+    $('select[name="category_filter"]').on('change', function(e) {
+        var category = $(this).val();
+        
+        if (category === 'all') {
+            $.getJSON('shopping_list.php?action=get_all').done(product_table);
+        } else {
+            $.getJSON('shopping_list.php?action=get_by_category&category='+category).done(product_table);
+        }
+    });
 });
 
 </script>
@@ -40,6 +53,7 @@ $(function() {
     
 <p><select name="category_filter">
     <option value="">Select One</option>
+    <option value="all">All</option>
 </select></p>
     
 <table>
@@ -51,7 +65,13 @@ $(function() {
         </tr>
     </thead>
     <tbody></tbody>
-    <tfoot></tfoot>
+    <tfoot>
+        <tr>
+            <td></td>
+            <td>Total:</td>
+            <td>$0.00</td>
+        </tr>
+    </tfoot>
 </table>
 
 </body>
