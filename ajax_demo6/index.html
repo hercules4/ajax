@@ -13,7 +13,7 @@ function build_table(response) {
             var row = $('<tr><td>'+category+'</td><td>'+response[category][i].name+'</td><td>$'+response[category][i].price+'</td></tr>');
             $('tbody').append(row);
             
-            sum += parseFloat(response[category][i].price);
+            sum += response[category][i].price;
         }
     }
     
