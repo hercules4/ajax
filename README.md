@@ -13,3 +13,4 @@ Topics to be covered
 - Deferred objects
 - module pattern and require.js
 - intro backbone.js
+- intro to D3
