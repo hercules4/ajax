@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script type="text/javascript">
+
+function category_list(response) {
+    for (var i = 0; i < response.length; i++) {
+        var option = $('<option value="'+response[i]+'">'+response[i]+'</option>');
+        
+        $('select[name="category_filter"]').append(option);
+    }
+}
+
+function product_table(response) {
+    var sum = 0;
+    
+    for (var category in response) {
+        for (var i = 0; i < response[category].length; i++) {
+            var row = $('<tr><td>'+category+'</td><td>'+response[category][i].name+'</td><td>$'+response[category][i].price+'</td></tr>');
+            
+            $('tbody').append(row);
+            
+            sum += response[category][i].price;
+        }
+    }
+    
+    $('tfoot').html('<tr><td></td><td>Total:</td><td>$'+sum.toFixed(2)+'</td></tr>');
+}
+
+$(function() {
+    $.getJSON('shopping_list.php?action=categories').done(category_list);
+    $.getJSON('shopping_list.php?action=all').done(product_table);
+});
+
+</script>
+</head>
+<body>
+    
+<p><select name="category_filter">
+    <option value="">Select One</option>
+</select></p>
+    
+<table>
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>Item</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+    <tfoot></tfoot>
+</table>
+
+</body>
+</html>
