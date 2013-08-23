@@ -2,11 +2,39 @@
 <html>
 <head>
 <title></title>
-<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="//code.jquery.com/jquery-1.10.1.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/1.3.1/lodash.min.js"></script>
 <script type="text/javascript">
 
-function category_list(response) {
+var cdia = {};
+
+cdia.init = function() {
+    $.getJSON('shopping_list.php?action=get_categories').done(cdia.category_list);
+    
+    cdia.events();
+}
+
+cdia.events = function() {
+    $('select[name="category_filter"]').on('change', function(e) {
+        var category = $(this).val();
+        
+        if (category === 'all') {
+            $.getJSON('shopping_list.php?action=get_all').done(cdia.product_table);
+        } else {
+            $.getJSON('shopping_list.php?action=get_by_category&category='+category).done(cdia.product_table);
+        }
+    });
+    
+    $('#add_item').on('submit', function(e) {
+        e.preventDefault();
+        
+        $.post('shopping_list.php?action=add_item', $(this).serialize()).done(function(response) {
+            $('select[name="category_filter"]').val($('select[name="category"]').val()).change();
+        });
+    });
+}
+
+cdia.category_list = function(response) {
     for (var i = 0; i < response.length; i++) {
         var option = '<option value="'+response[i]+'">'+response[i]+'</option>';
         
@@ -15,7 +43,7 @@ function category_list(response) {
     }
 }
 
-function product_table(response) {
+cdia.product_table = function(response) {
     var sum = 0;
     
     $('tbody').empty();
@@ -42,25 +70,7 @@ function product_table(response) {
 }
 
 $(function() {
-    $.getJSON('shopping_list.php?action=get_categories').done(category_list);
-    
-    $('select[name="category_filter"]').on('change', function(e) {
-        var category = $(this).val();
-        
-        if (category === 'all') {
-            $.getJSON('shopping_list.php?action=get_all').done(product_table);
-        } else {
-            $.getJSON('shopping_list.php?action=get_by_category&category='+category).done(product_table);
-        }
-    });
-    
-    $('#add_item').on('submit', function(e) {
-        e.preventDefault();
-        
-        $.post('shopping_list.php?action=add_item', $(this).serialize()).done(function(response) {
-            $('select[name="category_filter"]').val($('select[name="category"]').val()).change();
-        });
-    });
+    cdia.init();
 });
 
 </script>
@@ -95,7 +105,6 @@ $(function() {
 <form id="add_item">
     <p>Category: <select name="category">
         <option value="">Select One</option>
-        <option value="all">All</option>
     </select></p>
     
     <p>Item: <input type="text" name="item" /></p>
