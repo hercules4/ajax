@@ -58,7 +58,7 @@ $(function() {
         e.preventDefault();
         
         $.post('shopping_list.php?action=add_item', $(this).serialize()).done(function(response) {
-            console.log(response);
+            $('select[name="category_filter"]').val($('select[name="category"]').val()).change();
         });
     });
 });

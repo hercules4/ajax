@@ -47,7 +47,7 @@ if (isset($_REQUEST['action'])) {
         case 'add_item':
         $items[$_POST['category']][] = array('name' => $_POST['item'], 'price' => intval($_POST['price']));
         
-        print_r($items);
+        echo 1;
         break;
     }
 }
