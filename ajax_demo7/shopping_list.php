@@ -43,6 +43,12 @@ if (isset($_REQUEST['action'])) {
         
         echo json_encode($items);
         break;
+        
+        case 'add_item':
+        $items[$_POST['category']][] = array('name' => $_POST['item'], 'price' => $_POST['price']);
+        
+        print_r($items);
+        break;
     }
 }
 
