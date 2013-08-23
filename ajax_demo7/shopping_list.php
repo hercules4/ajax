@@ -6,6 +6,7 @@ session_start();
 
 header("Content-type: application/json");
 
+// only add the items to the session if the key doesn't exist
 if (!isset($_SESSION['items'])) {
     $_SESSION['items'] = array(
         "Produce" => array(
@@ -45,6 +46,7 @@ if (isset($_REQUEST['action'])) {
         case 'get_by_category':
         $category = array($_GET['category']);
         
+        // filter the array by category
         $items = array_intersect_key($_SESSION['items'], array_flip($category));
         
         echo json_encode($items);
@@ -53,6 +55,7 @@ if (isset($_REQUEST['action'])) {
         case 'add_item':
         $_SESSION['items'][$_POST['category']][] = array('name' => $_POST['item'], 'price' => intval($_POST['price']));
         
+        // echo something so that the jQuery done() method is triggered
         echo 1;
         break;
     }

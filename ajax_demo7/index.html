@@ -6,15 +6,18 @@
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/1.3.1/lodash.min.js"></script>
 <script type="text/javascript">
 
+// namespace for this application
 var cdia = {};
 
 cdia.init = function() {
+    // load category filter dropdown
     $.getJSON('shopping_list.php?action=get_categories').done(cdia.category_list);
     
     cdia.events();
 }
 
 cdia.events = function() {
+    // filter dropdown event
     $('select[name="category_filter"]').on('change', function(e) {
         var category = $(this).val();
         
@@ -25,10 +28,13 @@ cdia.events = function() {
         }
     });
     
+    // add category form event
     $('#add_item').on('submit', function(e) {
         e.preventDefault();
         
         $.post('shopping_list.php?action=add_item', $(this).serialize()).done(function(response) {
+            
+            // trigger change events to reload the content for this category to see the new item
             $('select[name="category_filter"]').val($('select[name="category"]').val()).change();
         });
     });
@@ -38,6 +44,7 @@ cdia.category_list = function(response) {
     for (var i = 0; i < response.length; i++) {
         var option = '<option value="'+response[i]+'">'+response[i]+'</option>';
         
+        // populate both category dropdowns
         $('select[name="category_filter"]').append(option);
         $('select[name="category"]').append(option);
     }
@@ -50,6 +57,7 @@ cdia.product_table = function(response) {
     
     for (var category in response) {
         for (var i = 0; i < response[category].length; i++) {
+            // template for product rows
             var row_template = _.template($('#product_table_row').html(), {
                 'category': category,
                 'item': response[category][i].name,
@@ -58,10 +66,12 @@ cdia.product_table = function(response) {
             
             $('tbody').append(row_template);
             
+            // add price to sum
             sum += response[category][i].price;
         }
     }
     
+    // template for footer row
     var footer_template = _.template($('#product_table_footer').html(), {
         'total': sum.toFixed(2)
     });
