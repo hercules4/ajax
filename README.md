@@ -11,6 +11,7 @@ Topics to be covered
     - load, get, getJSON, post, ajax
 - JSONP
 - Deferred objects
+- JavaScript templates
 - module pattern and require.js
 - intro backbone.js
 - intro to D3
