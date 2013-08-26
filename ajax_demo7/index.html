@@ -113,16 +113,18 @@ $(function() {
 <br />
 
 <form id="add_item">
-    <p>Category: <select name="category">
+    <p>Category: <select name="category" required>
         <option value="">Select One</option>
     </select></p>
     
-    <p>Item: <input type="text" name="item" /></p>
+    <p>Item: <input type="text" name="item" required></p>
     
-    <p>Price: <input type="text" name="price" /></p>
+    <p>Price: <input type="number" name="price" required></p>
     
     <p><input type="submit" name="submit" value="Submit" /></p>
 </form>
+
+<p><a href="shopping_list.php?action=clear_added_items">Clear added items</a></p>
 
 <script type="text/template" id="product_table_row">
     <tr>

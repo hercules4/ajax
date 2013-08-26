@@ -2,8 +2,6 @@
 
 session_start();
 
-// unset($_SESSION['items']);
-
 header("Content-type: application/json");
 
 // only add the items to the session if the key doesn't exist
@@ -57,6 +55,12 @@ if (isset($_REQUEST['action'])) {
         
         // echo something so that the jQuery done() method is triggered
         echo 1;
+        break;
+        
+        case 'clear_added_items':
+        unset($_SESSION['items']);
+        
+        header('Location: index.html');
         break;
     }
 }
